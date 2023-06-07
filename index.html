@@ -80,17 +80,18 @@
                         <span class="say">从见你第一眼开始就一直喜欢你了。</span><br>
                         <span class="say">可以做我女朋友吗？</span><br>
                         <span class="say"> </span><br>
-                        <span class="say" id="reply-head" style="display: none;">金望雯：</span>
-                        <span class="say" id="reply-content" style="display: none;"></span>
-                        <span class="say" id="reply-line"> 可以给我你的
+                        <div class="say" id="reply"> 可以给我你的
                             <button onclick="btn_reply()" class="reply-button">回复</button>吗？
-                            </span>
-                        
+                        </div>
 			        </div>
                 </div>
                 <div id="clock-box">
                     <span class="STYLE1">现在是</span>朱海瑞 <span class="STYLE1" style="color: red">爱上</span> 金望雯<span class="STYLE1">的</span>
                   <div id="clock"></div>
+              </div>
+              <div id="clock-box2" style="display:none;">
+                <span class="STYLE1">现在是</span>朱海瑞 <span class="STYLE1" style="color: red">❤</span> 金望雯<span class="STYLE1" style="color: red">相恋</span>
+                  <div id="clock2"></div>
               </div>
                 <canvas id="canvas" width="1100" height="680"></canvas>
             </div>
@@ -237,10 +238,9 @@
 		    together.setSeconds(0);
 		    together.setMilliseconds(0);
 
-		    $("#code1").show().typewriter();
             $("#clock-box").fadeIn(500);
             while (true) {
-                timeElapse(together);
+                timeElapse(together, 1);
                 $await(Jscex.Async.sleep(1000));
             }
         }));
@@ -310,14 +310,34 @@
     }
     function btn_reply(){
         let reply = prompt("今请写一句回复吧！目前仅支持正面回复哦！");
-        while (!reply) {
-            reply = prompt("哎呀，好像没有输入成功呢，请在输入一次吧！");
-        }
-        document.getElementById("reply-head").style.display = "block";
-        reply_content = document.getElementById("reply-content");
-        reply_content.innerHTML = reply;
-        reply_content.style.display = "block";
-        document.getElementById("reply-line").style.display = "none";
+        if (!reply) return;
+        reply_content = document.getElementById("reply");
+        reply_content.innerHTML = "金望雯: <br>" + reply;
+        let time = new Date();
+        let year = time.getFullYear();
+        let month = time.getMonth();
+        let date = time.getDate();
+        let hour = time.getHours();
+        let minute = time.getMinutes();
+        let second = time.getSeconds();
+        document.getElementById("clock-box").style.display = "none";
+        document.getElementById("clock-box2").style.display = "block";
+        var textAnimate = eval(Jscex.compile("async", function () {
+		    var together = new Date();
+		    together.setFullYear(year, month, date);
+		    together.setHours(hour);
+		    together.setMinutes(minute);
+		    together.setSeconds(second);
+		    together.setMilliseconds(0);
+
+            $("#clock-box2").fadeIn(500);
+            while (true) {
+                timeElapse(together, 2);
+                $await(Jscex.Async.sleep(1000));
+            }
+        }));
+        textAnimate().start();
+
     }
     </script>
     <iframe src = "./给你们.mp3" allow = "autoplay" hidden /> //自己修改音乐位置
