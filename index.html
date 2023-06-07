@@ -74,10 +74,15 @@
                     <div id="code4">
 			        	<span class="say">6月8日 </span><br>
 						<span class="say"> </span><br>
+                        <span class="say">朱海瑞：</span><br>
                         <span class="say">11朵玫瑰代表一心一意。</span><br>
                         <span class="say">正如我对你的爱慕。</span><br>
                         <span class="say">从见你第一眼开始就一直喜欢你了。</span><br>
                         <span class="say">可以做我女朋友吗？</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say" id="reply-head" style="display: none;">金望雯：</span>
+                        <span class="say" id="reply-content" style="display: none;"></span>
+                        <button onclick="btn_reply()" class="reply-button">写回复</button>
 			        </div>
                 </div>
                 <div id="clock-box">
@@ -299,6 +304,16 @@
         code3.style.display = "none";
         code4.style.display = "none";
         $("#code4").show().typewriter();
+    }
+    function btn_reply(){
+        let reply = prompt("今请写一句回复吧！目前仅支持正面回复哦！");
+        while (!reply) {
+            reply = prompt("哎呀，好像没有输入成功呢，请在输入一次吧！");
+        }
+        document.getElementById("reply-head").style.display = "block";
+        reply_content = document.getElementById("reply-content");
+        reply_content.innerHTML = reply;
+        reply_content.style.display = "block";
     }
     </script>
     <iframe src = "./给你们.mp3" allow = "autoplay" hidden /> //自己修改音乐位置

@@ -31,3 +31,10 @@ a {color:#000;font-size:14px;}
 #code2{display:none;font-size:16px;}
 #code3{display:none;font-size:16px;}
 #code4{display:none;font-size:16px;}
+
+.reply-button{
+    background-color: rgb(187, 187, 46);
+    border: 2px solid rgb(162, 237, 12);
+    /* 给边框添加圆角 */
+    border-radius: 6px; 
+}
