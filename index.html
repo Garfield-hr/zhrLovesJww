@@ -24,11 +24,11 @@
             <div id="wrap">
                 <div id="text">
                     <div id="side">
-                    <button onclick="btn1()" class="side-button">5月8日</button>
-                    <button onclick="btn2()" class="side-button">5月9日</button>
-                    <button onclick="btn3()" class="side-button">5月12日</button>
-                    <button onclick="btn4()" class="side-button">6月8日</button>
-                </div>
+                        <button onclick="btn1()" class="side-button">5月8日</button>
+                        <button onclick="btn2()" class="side-button">5月9日</button>
+                        <button onclick="btn3()" class="side-button">5月12日</button>
+                        <button onclick="btn4()" class="side-button">6月8日</button>
+                    </div>
 			        <div id="code1">
 			        	<span class="say">5月8日 多云 </span><br>
 						<span class="say"> </span><br>
@@ -46,7 +46,7 @@
                     <div id="code2">
 			        	<span class="say">5月9日 多云转晴 </span><br>
 						<span class="say"> </span><br>
-                        <span class="say">牛仔裤配AJ，今天的她依旧美丽，还比昨天添了些飒爽。</span><br>
+                        <span class="say">今天的她依旧美丽，还比昨天添了些飒爽。</span><br>
                         <span class="say">这样的女孩和我这样幼稚，木讷的男孩实在不是活在一个世界呀，我不禁又失落了起来。</span><br>
                         <span class="say">……</span><br>
                         <span class="say">“因为滝君会为了找三叶去那么远呀。”</span><br>
@@ -64,7 +64,7 @@
                         <span class="say">"嗯，其实我来日本之前不是这样的。”</span><br>
                         <span class="say">……</span><br>
                         <span class="say">听了你的故事，我觉得很难过，因为你真的很辛苦，很努力。</span><br>
-                        <span class="say">但又有些开心，因为我在你身上看到了自己的影子。</span><br>
+                        <span class="say">但，又有些开心，因为我在你身上看到了自己的影子。</span><br>
                         <span class="say">外在的独立实则是掩饰内心的不知所措。</span><br>
                         <span class="say">突然想起之前请你帮忙停车。</span><br>
                         <span class="say">那时就很在意你明明技术游刃有余，动作却不太自然。</span><br>
@@ -72,8 +72,10 @@
                         <span class="say">你真的好可爱！</span><br>
 			        </div>
                     <div id="code4">
-			        	<span class="say">6月8日 </span><br>
+			        	<span class="say" id="diary">6月8日 </span><br>
 						<span class="say"> </span><br>
+                        <span class="say">今天的故事，我们一起写吧！</span><br>
+                        <span class="say"> </span><br>
                         <span class="say">朱海瑞：</span><br>
                         <span class="say">11朵玫瑰代表一心一意。</span><br>
                         <span class="say">正如我对你的爱慕。</span><br>
@@ -232,16 +234,38 @@
        //下面修改起始日期
         var textAnimate = eval(Jscex.compile("async", function () {
 		    var together = new Date();
-		    together.setFullYear(2023, 4, 8);
-		    together.setHours(10);
-		    together.setMinutes(25);
-		    together.setSeconds(0);
-		    together.setMilliseconds(0);
+            if (window.localStorage && localStorage.getItem("reply")) {
 
-            $("#clock-box").fadeIn(500);
-            while (true) {
-                timeElapse(together, 1);
-                $await(Jscex.Async.sleep(1000));
+                var year = localStorage.getItem("year");
+                var month = localStorage.getItem("month");
+                var date = localStorage.getItem("date");
+                var hour = localStorage.getItem("hour");
+                var minute = localStorage.getItem("minute");
+                var second = localStorage.getItem("second");
+
+                together.setFullYear(year, month, date);
+		        together.setHours(hour);
+		        together.setMinutes(minute);
+		        together.setSeconds(second);
+		        together.setMilliseconds(0);
+                $("#code1").show().typewriter();
+                $("#clock-box2").fadeIn(500);
+                while (true) {
+                    timeElapse(together, 2);
+                    $await(Jscex.Async.sleep(1000));
+                }
+            } else {
+                together.setFullYear(2023, 4, 8);
+		        together.setHours(10);
+		        together.setMinutes(25);
+		        together.setSeconds(0);
+		        together.setMilliseconds(0);
+                $("#code1").show().typewriter();
+                $("#clock-box").fadeIn(500);
+                while (true) {
+                    timeElapse(together, 1);
+                    $await(Jscex.Async.sleep(1000));
+                }
             }
         }));
 
@@ -256,7 +280,14 @@
 
             $await(jumpAnimate());
         }));
-
+        if (window.localStorage && localStorage.getItem("reply")) {
+            var reply = localStorage.getItem("reply");
+                reply_content = document.getElementById("reply");
+                reply_content.innerHTML = "金望雯\: <br>" + reply;
+                document.getElementById("diary").innerHTML = "6月8日 晴"
+                document.getElementById("clock-box").style.display = "none";
+                document.getElementById("clock-box2").style.removeProperty("display");
+        }
         runAsync().start();
     })();
 
@@ -312,7 +343,10 @@
         let reply = prompt("今请写一句回复吧！目前仅支持正面回复哦！");
         if (!reply) return;
         reply_content = document.getElementById("reply");
-        reply_content.innerHTML = "金望雯: <br>" + reply;
+        reply_content.innerHTML = "金望雯\: <br>" + reply;
+        document.getElementById("diary").innerHTML = "6月8日 晴"
+        document.getElementById("clock-box").style.display = "none";
+        document.getElementById("clock-box2").style.setProperty("display", "initial");
         let time = new Date();
         let year = time.getFullYear();
         let month = time.getMonth();
@@ -320,8 +354,6 @@
         let hour = time.getHours();
         let minute = time.getMinutes();
         let second = time.getSeconds();
-        document.getElementById("clock-box").style.display = "none";
-        document.getElementById("clock-box2").style.display = "block";
         var textAnimate = eval(Jscex.compile("async", function () {
 		    var together = new Date();
 		    together.setFullYear(year, month, date);
@@ -337,6 +369,15 @@
             }
         }));
         textAnimate().start();
+        if (window.localStorage) {
+            localStorage.setItem("reply", reply);
+            localStorage.setItem("year", year);
+            localStorage.setItem("month", month);
+            localStorage.setItem("date", date);
+            localStorage.setItem("hour", hour);
+            localStorage.setItem("minute", minute);
+            localStorage.setItem("second", second);
+        }
 
     }
     </script>
