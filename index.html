@@ -82,7 +82,10 @@
                         <span class="say"> </span><br>
                         <span class="say" id="reply-head" style="display: none;">金望雯：</span>
                         <span class="say" id="reply-content" style="display: none;"></span>
-                        <button onclick="btn_reply()" class="reply-button">写回复</button>
+                        <span class="say" id="reply-line"> 可以给我你的
+                            <button onclick="btn_reply()" class="reply-button">回复</button>吗？
+                            </span>
+                        
 			        </div>
                 </div>
                 <div id="clock-box">
@@ -314,6 +317,7 @@
         reply_content = document.getElementById("reply-content");
         reply_content.innerHTML = reply;
         reply_content.style.display = "block";
+        document.getElementById("reply-line").style.display = "none";
     }
     </script>
     <iframe src = "./给你们.mp3" allow = "autoplay" hidden /> //自己修改音乐位置
